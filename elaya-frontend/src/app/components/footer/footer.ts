@@ -1,5 +1,3 @@
-// src/app/components/footer/footer.ts
-
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -8,148 +6,52 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   template: `
-    <footer class="footer-container">
-      <div class="footer-content">
-        <!-- Hours -->
-        <div class="footer-section">
-          <p>MARDI À DIMANCHE : 11H45 - 14H00</p>
-          <p>MARDI À JEUDI ET DIMANCHE : 18H00 - 22H00</p>
-          <p>VENDREDI - SAMEDI : 18H00 - 22H30</p>
+    <footer class="footer">
+      <div class="container footer-content">
+        <div class="footer-col brand">
+          <h3>ELAYA.</h3>
+          <p>L'âme de l'Afrique dans votre assiette.<br>Cuisine fusion & authentique.</p>
         </div>
-
-        <!-- Address -->
-        <div class="footer-section center">
-          <p>2 RUE VICTOR HUGO</p>
-          <p>63300 THIERS</p>
+        <div class="footer-col">
+          <h4>Horaires</h4>
+          <p>Mardi - Dimanche : 11h45 - 14h00</p>
+          <p>Soirs & Week-end : 18h00 - 22h30</p>
         </div>
-
-        <!-- Social -->
-        <div class="footer-section right">
-          <p class="social-title">SUIVEZ-NOUS !</p>
-          <div class="social-icons">
-            <!-- Twitter -->
-            <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/>
-            </svg>
-            <!-- Facebook -->
-            <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/>
-            </svg>
-            <!-- Instagram -->
-            <svg class="social-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-              <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/>
-              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
-            </svg>
+        <div class="footer-col">
+          <h4>Nous trouver</h4>
+          <p>2 Rue Victor Hugo<br>63300 THIERS</p>
+          <div class="socials">
+            <span>Instagram</span> • <span>Facebook</span>
           </div>
         </div>
       </div>
-
-      <!-- Copyright -->
       <div class="copyright">
-        © 2020 by Melissa. Powered and secured by Wix
+        © 2025 Elaya Restaurant. Powered by AfroTech.
       </div>
     </footer>
   `,
   styles: [`
-    .footer-container {
-      padding: 3rem 5rem 1.5rem;
-      background-color: transparent;
+    .footer {
+      background-color: #050505;
+      border-top: 4px solid var(--gold);
+      padding: 4rem 0 1rem;
+      margin-top: auto; /* Colle le footer en bas si la page est courte */
     }
-
     .footer-content {
       display: flex;
       justify-content: space-between;
-      align-items: flex-end;
-      color: white;
-      font-size: 0.625rem;
-      font-family: Arial, Helvetica, sans-serif;
-      opacity: 0.75;
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto 3rem;
+      flex-wrap: wrap;
+      gap: 2rem;
     }
-
-    .footer-section {
-      display: flex;
-      flex-direction: column;
-      gap: 0.125rem;
-    }
-
-    .footer-section.center {
-      text-align: center;
-    }
-
-    .footer-section.right {
-      text-align: right;
-    }
-
-    .footer-section p {
-      margin: 0;
-      line-height: 1.6;
-    }
-
-    .social-title {
-      margin-bottom: 0.375rem;
-    }
-
-    .social-icons {
-      display: flex;
-      gap: 0.625rem;
-      justify-content: flex-end;
-    }
-
-    .social-icon {
-      width: 0.875rem;
-      height: 0.875rem;
-      color: white;
-      cursor: pointer;
-      transition: color 0.3s;
-    }
-
-    .social-icon:hover {
-      color: #d4a574;
-    }
-
-    .copyright {
-      text-align: center;
-      color: white;
-      font-size: 0.563rem;
-      font-family: Arial, Helvetica, sans-serif;
-      opacity: 0.5;
-      margin-top: 1.5rem;
-    }
-
-    @media (max-width: 1024px) {
-      .footer-container {
-        padding: 2rem 2rem 1rem;
-      }
-
-      .footer-content {
-        font-size: 0.563rem;
-      }
-    }
-
-    @media (max-width: 768px) {
-      .footer-container {
-        padding: 2rem 1rem 1rem;
-      }
-
-      .footer-content {
-        flex-direction: column;
-        align-items: center;
-        gap: 1.5rem;
-        text-align: center;
-      }
-
-      .footer-section {
-        align-items: center;
-      }
-
-      .footer-section.right {
-        text-align: center;
-      }
-
-      .social-icons {
-        justify-content: center;
-      }
+    .footer-col h3 { color: var(--gold); font-size: 2rem; margin: 0 0 1rem;}
+    .footer-col h4 { color: var(--text-main); margin: 0 0 1rem; font-size: 1.2rem;}
+    .footer-col p { color: var(--text-muted); line-height: 1.6; font-size: 0.9rem; margin: 0;}
+    .copyright { 
+      text-align: center; color: #444; font-size: 0.8rem; 
+      border-top: 1px solid #222; padding-top: 20px; width: 90%; margin: 0 auto;
     }
   `]
 })

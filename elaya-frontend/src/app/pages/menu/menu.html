@@ -1,1 +1,146 @@
-<p>menu works!</p>
+<section class="menu-header">
+  <h1 class="page-title">Notre <span class="gold-text">Carte</span></h1>
+  <p class="subtitle">Fusion de saveurs, tradition & modernité.</p>
+  
+  <div class="filters">
+    <button class="filter-btn active">TOUT</button>
+    <button class="filter-btn">ENTRÉES</button>
+    <button class="filter-btn">PLATS</button>
+    <button class="filter-btn">DESSERTS</button>
+  </div>
+</section>
+
+<div class="menu-grid">
+  
+  <article class="card">
+    <div class="card-image-box">
+       <img src="https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Yassa" class="card-img">
+    </div>
+    <div class="card-content">
+      <div class="card-header">
+        <h3>Poulet Yassa</h3>
+        <span class="price">18€</span>
+      </div>
+      <p class="description">Poulet fermier mariné au citron vert, oignons confits, olives, servi avec riz blanc.</p>
+      <div class="card-actions">
+        <span class="tag">🌶️ Relevé</span>
+        <button class="add-btn">+</button>
+      </div>
+    </div>
+  </article>
+
+  <article class="card">
+    <div class="card-image-box">
+      <img src="https://images.unsplash.com/photo-1543339308-43e59d6b73a6?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Mafe" class="card-img">
+    </div>
+    <div class="card-content">
+      <div class="card-header">
+        <h3>Mafé Bœuf</h3>
+        <span class="price">16€</span>
+      </div>
+      <p class="description">Mijoté de bœuf tendre dans une sauce onctueuse à la pâte d'arachide.</p>
+      <div class="card-actions">
+        <span class="tag">🥜 Contient Arachide</span>
+        <button class="add-btn">+</button>
+      </div>
+    </div>
+  </article>
+
+  <article class="card">
+    <div class="card-image-box">
+      <img src="https://images.unsplash.com/photo-1559847844-5315695dadae?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Pastels" class="card-img">
+    </div>
+    <div class="card-content">
+      <div class="card-header">
+        <h3>Pastels Thon</h3>
+        <span class="price">8€</span>
+      </div>
+      <p class="description">Petits chaussons frits farcis au thon et épices douces, sauce tomate maison.</p>
+      <div class="card-actions">
+        <span class="tag">Entrée</span>
+        <button class="add-btn">+</button>
+      </div>
+    </div>
+  </article>
+
+</div>
+
+<style>
+  .menu-header { text-align: center; padding: 3rem 1rem; }
+  .page-title { font-size: 3rem; color: var(--text-main); margin-bottom: 0.5rem; }
+  .gold-text { color: var(--gold); font-style: italic; }
+  .subtitle { color: var(--text-muted); margin-bottom: 2rem; }
+
+  .filters { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+  .filter-btn {
+    background: transparent;
+    border: 1px solid #333;
+    color: var(--text-muted);
+    padding: 10px 25px;
+    border-radius: 50px; /* Boutons ronds */
+    font-size: 0.9rem;
+    transition: 0.3s;
+  }
+  .filter-btn.active, .filter-btn:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+    background: rgba(253, 203, 88, 0.1);
+  }
+
+  /* GRILLE */
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    padding: 0 5% 5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* CARTE AFRO-LUXE */
+  .card {
+    background-color: var(--card-bg);
+    border: 1px solid #222;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+    border-color: var(--gold);
+  }
+  /* BORDURE WAX GAUCHE */
+  .card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+    background: var(--wax-border); /* Dégradé Vert/Or/Rouge */
+  }
+
+  .card-image-box { height: 200px; overflow: hidden; }
+  .card-img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; filter: brightness(0.85); }
+  .card:hover .card-img { transform: scale(1.05); filter: brightness(1); }
+
+  .card-content { padding: 20px 20px 20px 30px; } /* Marge gauche pour la bordure wax */
+  
+  .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .card-header h3 { color: var(--gold); margin: 0; font-size: 1.4rem; font-weight: 500;}
+  .price { color: var(--text-main); font-weight: 700; font-size: 1.2rem; font-family: 'Oswald'; }
+  
+  .description { color: #888; font-size: 0.9rem; line-height: 1.5; margin-bottom: 20px; }
+
+  .card-actions { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #333; padding-top: 15px;}
+  .tag { color: var(--green-wax); font-size: 0.8rem; font-weight: 600; text-transform: uppercase; }
+  
+  .add-btn {
+    background: var(--gold);
+    color: var(--black-bg);
+    border: none;
+    width: 35px; height: 35px;
+    font-size: 1.5rem;
+    display: flex; align-items: center; justify-content: center;
+    transition: 0.2s;
+  }
+  .add-btn:hover { background: var(--text-main); }
+</style>

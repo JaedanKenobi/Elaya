@@ -1,5 +1,3 @@
-// src/app/pages/register/register.ts
-
 import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -11,344 +9,116 @@ import { AuthService, RegisterRequest } from '../../api/auth';
   standalone: true,
   imports: [CommonModule, FormsModule, RouterLink],
   template: `
-    <div class="register-container">
-      <div class="register-card">
-        <h1 class="register-title">INSCRIPTION</h1>
-        <p class="register-subtitle">Créez votre compte client</p>
+    <div class="auth-page">
+      <div class="auth-card">
+        <h1 class="auth-title">INSCRIPTION</h1>
+        <p class="auth-subtitle">Rejoignez la famille Elaya</p>
 
         <form (ngSubmit)="register()" #registerForm="ngForm">
           <div class="form-row">
             <div class="form-group">
-              <label>Prénom *</label>
-              <input 
-                type="text" 
-                [(ngModel)]="formData.prenom" 
-                name="prenom"
-                required
-                class="form-input">
+              <label>Prénom</label>
+              <input type="text" [(ngModel)]="formData.prenom" name="prenom" required class="auth-input">
             </div>
-
             <div class="form-group">
-              <label>Nom *</label>
-              <input 
-                type="text" 
-                [(ngModel)]="formData.nom" 
-                name="nom"
-                required
-                class="form-input">
+              <label>Nom</label>
+              <input type="text" [(ngModel)]="formData.nom" name="nom" required class="auth-input">
             </div>
           </div>
 
           <div class="form-group">
-            <label>Email *</label>
-            <input 
-              type="email" 
-              [(ngModel)]="formData.email" 
-              name="email"
-              placeholder="votre@email.com"
-              required
-              class="form-input">
+            <label>Email</label>
+            <input type="email" [(ngModel)]="formData.email" name="email" required class="auth-input" placeholder="email@exemple.com">
           </div>
 
           <div class="form-group">
             <label>Téléphone</label>
-            <input 
-              type="tel" 
-              [(ngModel)]="formData.telephone" 
-              name="telephone"
-              placeholder="06 12 34 56 78"
-              class="form-input">
+            <input type="tel" [(ngModel)]="formData.telephone" name="telephone" class="auth-input">
           </div>
 
           <div class="form-group">
-            <label>Mot de passe *</label>
-            <input 
-              type="password" 
-              [(ngModel)]="formData.password" 
-              name="password"
-              placeholder="••••••••"
-              required
-              minlength="8"
-              class="form-input">
-            <small class="hint">Minimum 8 caractères</small>
+            <label>Mot de passe</label>
+            <input type="password" [(ngModel)]="formData.password" name="password" required minlength="8" class="auth-input" placeholder="Minimum 8 caractères">
           </div>
 
           <div class="form-group">
-            <label>Confirmer le mot de passe *</label>
-            <input 
-              type="password" 
-              [(ngModel)]="formData.password_confirmation" 
-              name="password_confirmation"
-              placeholder="••••••••"
-              required
-              class="form-input">
+            <label>Confirmer</label>
+            <input type="password" [(ngModel)]="formData.password_confirmation" name="password_confirmation" required class="auth-input">
           </div>
 
-          <!-- Error Message -->
-          <div *ngIf="errorMessage()" class="error-message">
-            {{ errorMessage() }}
-          </div>
+          <div *ngIf="errorMessage()" class="error-msg">{{ errorMessage() }}</div>
 
-          <!-- Password Mismatch Warning -->
-          <div *ngIf="formData.password && formData.password_confirmation && formData.password !== formData.password_confirmation" class="warning-message">
-            Les mots de passe ne correspondent pas
-          </div>
-
-          <!-- Submit Button -->
-          <button 
-            type="submit" 
-            [disabled]="!registerForm.valid || formData.password !== formData.password_confirmation || submitting()"
-            class="submit-btn">
-            {{ submitting() ? 'Inscription...' : "S'inscrire" }}
+          <button type="submit" [disabled]="!registerForm.valid || submitting()" class="auth-btn">
+            {{ submitting() ? 'Inscription...' : "S'INSCRIRE" }}
           </button>
         </form>
 
-        <div class="divider">
-          <span>ou</span>
-        </div>
-
-        <div class="login-link">
-          <p>Vous avez déjà un compte ?</p>
-          <a routerLink="/login" class="link">Se connecter</a>
+        <div class="auth-footer">
+          <p>Déjà membre ? <a routerLink="/login" class="gold-link">Se connecter</a></p>
         </div>
       </div>
     </div>
   `,
   styles: [`
-    .register-container {
-      padding: 3rem 2rem;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .auth-page { 
+      min-height: 100vh; display: flex; align-items: center; justify-content: center; 
+      background: var(--black-bg); padding: 4rem 2rem; 
+    }
+    .auth-card {
+      width: 100%; max-width: 500px; background: var(--card-bg);
+      padding: 3rem 2rem; border: 1px solid #333; position: relative;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    }
+    .auth-card::before {
+      content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px;
+      background: var(--wax-border);
     }
 
-    .register-card {
-      width: 100%;
-      max-width: 550px;
-      background: linear-gradient(to bottom, #f5f1e8 0%, #ebe6dc 100%);
-      padding: 3rem;
-      border: 3px solid #c9984a;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    .auth-title { color: var(--gold); text-align: center; margin: 0; font-size: 2rem; }
+    .auth-subtitle { color: #777; text-align: center; margin-bottom: 2rem; font-size: 0.9rem; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    
+    .form-group { margin-bottom: 1.2rem; }
+    .form-group label { display: block; color: var(--text-main); font-size: 0.8rem; margin-bottom: 5px; font-family: 'Oswald'; letter-spacing: 1px;}
+    
+    .auth-input {
+      width: 100%; padding: 12px; background: #111; border: 1px solid #444;
+      color: white; font-family: 'Montserrat'; outline: none; transition: 0.3s; box-sizing: border-box;
     }
+    .auth-input:focus { border-color: var(--gold); background: black; }
 
-    .register-title {
-      text-align: center;
-      color: #2a2a2a;
-      font-size: 2rem;
-      font-weight: 300;
-      letter-spacing: 0.2em;
-      margin-bottom: 0.5rem;
-      font-family: Georgia, "Times New Roman", serif;
+    .auth-btn {
+      width: 100%; padding: 12px; background: var(--gold); border: none;
+      font-weight: bold; cursor: pointer; transition: 0.3s; color: black; margin-top: 1rem;
     }
+    .auth-btn:hover:not(:disabled) { background: white; }
+    .auth-btn:disabled { background: #444; cursor: not-allowed; }
 
-    .register-subtitle {
-      text-align: center;
-      color: #6a6a6a;
-      font-size: 0.938rem;
-      margin-bottom: 2.5rem;
-      font-family: Arial, Helvetica, sans-serif;
-    }
+    .error-msg { color: var(--red-wax); text-align: center; margin-bottom: 1rem; font-size: 0.9rem; }
 
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-    }
-
-    .form-group {
-      margin-bottom: 1.5rem;
-    }
-
-    .form-group label {
-      display: block;
-      margin-bottom: 0.5rem;
-      color: #2a2a2a;
-      font-size: 0.875rem;
-      font-family: Arial, Helvetica, sans-serif;
-      font-weight: 600;
-    }
-
-    .form-input {
-      width: 100%;
-      padding: 0.875rem;
-      border: 2px solid #c9984a;
-      background: white;
-      font-size: 0.938rem;
-      font-family: Arial, Helvetica, sans-serif;
-      color: #2a2a2a;
-      transition: border-color 0.3s;
-    }
-
-    .form-input:focus {
-      outline: none;
-      border-color: #d4772e;
-    }
-
-    .form-input::placeholder {
-      color: #b0b0b0;
-    }
-
-    .hint {
-      display: block;
-      margin-top: 0.25rem;
-      font-size: 0.75rem;
-      color: #6a6a6a;
-      font-family: Arial, Helvetica, sans-serif;
-    }
-
-    .error-message {
-      padding: 1rem;
-      background: #ffebee;
-      color: #c62828;
-      border-left: 4px solid #c62828;
-      margin-bottom: 1.5rem;
-      font-size: 0.875rem;
-      font-family: Arial, Helvetica, sans-serif;
-    }
-
-    .warning-message {
-      padding: 1rem;
-      background: #fff3e0;
-      color: #e65100;
-      border-left: 4px solid #e65100;
-      margin-bottom: 1.5rem;
-      font-size: 0.875rem;
-      font-family: Arial, Helvetica, sans-serif;
-    }
-
-    .submit-btn {
-      width: 100%;
-      padding: 1rem;
-      background: #d4772e;
-      color: white;
-      border: none;
-      font-size: 1rem;
-      font-family: Arial, Helvetica, sans-serif;
-      cursor: pointer;
-      transition: all 0.3s;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      font-weight: 600;
-    }
-
-    .submit-btn:hover:not(:disabled) {
-      background: #b86625;
-      transform: translateY(-2px);
-    }
-
-    .submit-btn:disabled {
-      background: #8a8a8a;
-      cursor: not-allowed;
-      opacity: 0.6;
-    }
-
-    .divider {
-      text-align: center;
-      margin: 2rem 0;
-      position: relative;
-    }
-
-    .divider::before,
-    .divider::after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      width: 40%;
-      height: 1px;
-      background: #d4a574;
-    }
-
-    .divider::before {
-      left: 0;
-    }
-
-    .divider::after {
-      right: 0;
-    }
-
-    .divider span {
-      background: linear-gradient(to bottom, #f5f1e8 0%, #ebe6dc 100%);
-      padding: 0 1rem;
-      color: #6a6a6a;
-      font-size: 0.875rem;
-      font-family: Arial, Helvetica, sans-serif;
-    }
-
-    .login-link {
-      text-align: center;
-    }
-
-    .login-link p {
-      color: #4a4a4a;
-      font-size: 0.938rem;
-      margin-bottom: 0.5rem;
-      font-family: Arial, Helvetica, sans-serif;
-    }
-
-    .link {
-      color: #d4772e;
-      text-decoration: none;
-      font-size: 1rem;
-      font-family: Arial, Helvetica, sans-serif;
-      font-weight: 600;
-      transition: color 0.3s;
-    }
-
-    .link:hover {
-      color: #b86625;
-      text-decoration: underline;
-    }
-
-    @media (max-width: 768px) {
-      .register-container {
-        padding: 2rem 1rem;
-      }
-
-      .register-card {
-        padding: 2rem 1.5rem;
-      }
-
-      .register-title {
-        font-size: 1.75rem;
-      }
-
-      .form-row {
-        grid-template-columns: 1fr;
-      }
-    }
+    .auth-footer { text-align: center; margin-top: 2rem; border-top: 1px solid #333; padding-top: 1rem; color: #888; font-size: 0.9rem;}
+    .gold-link { color: var(--gold); text-decoration: none; font-weight: bold; }
+    .gold-link:hover { text-decoration: underline; }
+    
+    @media(max-width:500px){ .form-row { grid-template-columns: 1fr; } }
   `]
 })
 export class Register {
   private authService = inject(AuthService);
   private router = inject(Router);
-
-  formData: RegisterRequest = {
-    nom: '',
-    prenom: '',
-    email: '',
-    password: '',
-    password_confirmation: '',
-    telephone: ''
-  };
-
+  formData: RegisterRequest = { nom: '', prenom: '', email: '', password: '', password_confirmation: '', telephone: '' };
   submitting = signal(false);
   errorMessage = signal<string | null>(null);
 
   register(): void {
+    if(this.formData.password !== this.formData.password_confirmation) {
+      this.errorMessage.set('Les mots de passe ne correspondent pas'); return;
+    }
     this.submitting.set(true);
-    this.errorMessage.set(null);
-
     this.authService.register(this.formData).subscribe({
-      next: (response) => {
-        console.log('Inscription réussie:', response);
-        this.router.navigate(['/account']);
-      },
-      error: (err: Error) => {
-        console.error('Erreur inscription:', err);
-        this.errorMessage.set(err.message);
-        this.submitting.set(false);
-      }
+      next: () => { this.router.navigate(['/account']); },
+      error: (err) => { this.errorMessage.set('Erreur inscription'); this.submitting.set(false); }
     });
   }
 }

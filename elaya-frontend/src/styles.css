@@ -1,1 +1,32 @@
-/* You can add global styles to this file, and also import other style files */
+/* src/styles.css */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Oswald:wght@400;500;700&display=swap');
+
+:root {
+    /* PALETTE AFRO-LUXE */
+    --gold: #FDCB58;           /* Or Solaire */
+    --gold-hover: #E1B12C;
+    --black-bg: #0F0F0F;       /* Noir Profond */
+    --card-bg: #1A1A1A;        /* Gris Anthracite */
+    --text-main: #FAFAFA;      /* Blanc Cassé */
+    --text-muted: #A0A0A0;
+    --green-wax: #009432;      /* Vert Vif */
+    --red-wax: #EA2027;        /* Rouge Piment */
+    
+    /* Dégradé WAX pour les bordures */
+    --wax-border: linear-gradient(180deg, var(--green-wax) 0%, var(--gold) 50%, var(--red-wax) 100%);
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--black-bg);
+    color: var(--text-main);
+    margin: 0;
+    padding: 0;
+}
+
+/* Titres en police Oswald (Haut et fort) */
+h1, h2, h3, h4, button {
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}

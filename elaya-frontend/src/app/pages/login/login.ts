@@ -1,5 +1,3 @@
-// src/app/pages/login/login.ts
-
 import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -11,268 +9,87 @@ import { AuthService, LoginRequest } from '../../api/auth';
   standalone: true,
   imports: [CommonModule, FormsModule, RouterLink],
   template: `
-    <div class="login-container">
-      <div class="login-card">
-        <h1 class="login-title">CONNEXION</h1>
-        <p class="login-subtitle">Accédez à votre espace personnel</p>
+    <div class="auth-page">
+      <div class="auth-card">
+        <h1 class="auth-title">CONNEXION</h1>
+        <p class="auth-subtitle">Espace Client Elaya</p>
 
         <form (ngSubmit)="login()" #loginForm="ngForm">
           <div class="form-group">
-            <label>Email *</label>
-            <input 
-              type="email" 
-              [(ngModel)]="credentials.email" 
-              name="email"
-              placeholder="votre@email.com"
-              required
-              class="form-input">
+            <label>Email</label>
+            <input type="email" [(ngModel)]="credentials.email" name="email" required class="auth-input" placeholder="email@exemple.com">
           </div>
 
           <div class="form-group">
-            <label>Mot de passe *</label>
-            <input 
-              type="password" 
-              [(ngModel)]="credentials.password" 
-              name="password"
-              placeholder="••••••••"
-              required
-              class="form-input">
+            <label>Mot de passe</label>
+            <input type="password" [(ngModel)]="credentials.password" name="password" required class="auth-input" placeholder="••••••">
           </div>
 
-          <!-- Error Message -->
-          <div *ngIf="errorMessage()" class="error-message">
-            {{ errorMessage() }}
-          </div>
+          <div *ngIf="errorMessage()" class="error-msg">{{ errorMessage() }}</div>
 
-          <!-- Submit Button -->
-          <button 
-            type="submit" 
-            [disabled]="!loginForm.valid || submitting()"
-            class="submit-btn">
-            {{ submitting() ? 'Connexion...' : 'Se connecter' }}
+          <button type="submit" [disabled]="!loginForm.valid || submitting()" class="auth-btn">
+            {{ submitting() ? 'Connexion...' : 'SE CONNECTER' }}
           </button>
         </form>
 
-        <div class="divider">
-          <span>ou</span>
-        </div>
-
-        <div class="register-link">
-          <p>Pas encore de compte ?</p>
-          <a routerLink="/register" class="link">Créer un compte</a>
+        <div class="auth-footer">
+          <p>Pas encore membre ? <a routerLink="/register" class="gold-link">Créer un compte</a></p>
         </div>
       </div>
     </div>
   `,
   styles: [`
-    .login-container {
-      padding: 3rem 2rem;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .auth-page { 
+      min-height: 80vh; display: flex; align-items: center; justify-content: center; 
+      background: var(--black-bg); padding: 2rem; 
+    }
+    .auth-card {
+      width: 100%; max-width: 400px; background: var(--card-bg);
+      padding: 3rem 2rem; border: 1px solid #333; position: relative;
+    }
+    /* Touche WAX en haut de la carte */
+    .auth-card::top {
+      content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px;
+      background: var(--wax-border);
     }
 
-    .login-card {
-      width: 100%;
-      max-width: 450px;
-      background: linear-gradient(to bottom, #f5f1e8 0%, #ebe6dc 100%);
-      padding: 3rem;
-      border: 3px solid #c9984a;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    .auth-title { color: var(--gold); text-align: center; margin: 0; font-size: 2rem; }
+    .auth-subtitle { color: #777; text-align: center; margin-bottom: 2rem; font-size: 0.9rem; }
+
+    .form-group { margin-bottom: 1.5rem; }
+    .form-group label { display: block; color: var(--text-main); font-size: 0.8rem; margin-bottom: 5px; font-family: 'Oswald'; letter-spacing: 1px;}
+    
+    .auth-input {
+      width: 100%; padding: 12px; background: #111; border: 1px solid #444;
+      color: white; font-family: 'Montserrat'; outline: none; transition: 0.3s; box-sizing: border-box;
     }
+    .auth-input:focus { border-color: var(--gold); }
 
-    .login-title {
-      text-align: center;
-      color: #2a2a2a;
-      font-size: 2rem;
-      font-weight: 300;
-      letter-spacing: 0.2em;
-      margin-bottom: 0.5rem;
-      font-family: Georgia, "Times New Roman", serif;
+    .auth-btn {
+      width: 100%; padding: 12px; background: var(--gold); border: none;
+      font-weight: bold; cursor: pointer; transition: 0.3s; color: black;
     }
+    .auth-btn:hover { background: white; }
 
-    .login-subtitle {
-      text-align: center;
-      color: #6a6a6a;
-      font-size: 0.938rem;
-      margin-bottom: 2.5rem;
-      font-family: Arial, Helvetica, sans-serif;
-    }
+    .error-msg { color: var(--red-wax); text-align: center; margin-bottom: 1rem; font-size: 0.9rem; }
 
-    .form-group {
-      margin-bottom: 1.5rem;
-    }
-
-    .form-group label {
-      display: block;
-      margin-bottom: 0.5rem;
-      color: #2a2a2a;
-      font-size: 0.875rem;
-      font-family: Arial, Helvetica, sans-serif;
-      font-weight: 600;
-    }
-
-    .form-input {
-      width: 100%;
-      padding: 0.875rem;
-      border: 2px solid #c9984a;
-      background: white;
-      font-size: 0.938rem;
-      font-family: Arial, Helvetica, sans-serif;
-      color: #2a2a2a;
-      transition: border-color 0.3s;
-    }
-
-    .form-input:focus {
-      outline: none;
-      border-color: #d4772e;
-    }
-
-    .form-input::placeholder {
-      color: #b0b0b0;
-    }
-
-    .error-message {
-      padding: 1rem;
-      background: #ffebee;
-      color: #c62828;
-      border-left: 4px solid #c62828;
-      margin-bottom: 1.5rem;
-      font-size: 0.875rem;
-      font-family: Arial, Helvetica, sans-serif;
-    }
-
-    .submit-btn {
-      width: 100%;
-      padding: 1rem;
-      background: #d4772e;
-      color: white;
-      border: none;
-      font-size: 1rem;
-      font-family: Arial, Helvetica, sans-serif;
-      cursor: pointer;
-      transition: all 0.3s;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      font-weight: 600;
-    }
-
-    .submit-btn:hover:not(:disabled) {
-      background: #b86625;
-      transform: translateY(-2px);
-    }
-
-    .submit-btn:disabled {
-      background: #8a8a8a;
-      cursor: not-allowed;
-      opacity: 0.6;
-    }
-
-    .divider {
-      text-align: center;
-      margin: 2rem 0;
-      position: relative;
-    }
-
-    .divider::before,
-    .divider::after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      width: 40%;
-      height: 1px;
-      background: #d4a574;
-    }
-
-    .divider::before {
-      left: 0;
-    }
-
-    .divider::after {
-      right: 0;
-    }
-
-    .divider span {
-      background: linear-gradient(to bottom, #f5f1e8 0%, #ebe6dc 100%);
-      padding: 0 1rem;
-      color: #6a6a6a;
-      font-size: 0.875rem;
-      font-family: Arial, Helvetica, sans-serif;
-    }
-
-    .register-link {
-      text-align: center;
-    }
-
-    .register-link p {
-      color: #4a4a4a;
-      font-size: 0.938rem;
-      margin-bottom: 0.5rem;
-      font-family: Arial, Helvetica, sans-serif;
-    }
-
-    .link {
-      color: #d4772e;
-      text-decoration: none;
-      font-size: 1rem;
-      font-family: Arial, Helvetica, sans-serif;
-      font-weight: 600;
-      transition: color 0.3s;
-    }
-
-    .link:hover {
-      color: #b86625;
-      text-decoration: underline;
-    }
-
-    @media (max-width: 768px) {
-      .login-container {
-        padding: 2rem 1rem;
-      }
-
-      .login-card {
-        padding: 2rem 1.5rem;
-      }
-
-      .login-title {
-        font-size: 1.75rem;
-      }
-    }
+    .auth-footer { text-align: center; margin-top: 2rem; border-top: 1px solid #333; padding-top: 1rem; color: #888; font-size: 0.9rem;}
+    .gold-link { color: var(--gold); text-decoration: none; font-weight: bold; }
+    .gold-link:hover { text-decoration: underline; }
   `]
 })
 export class Login {
   private authService = inject(AuthService);
   private router = inject(Router);
-
-  credentials: LoginRequest = {
-    email: '',
-    password: ''
-  };
-
+  credentials: LoginRequest = { email: '', password: '' };
   submitting = signal(false);
   errorMessage = signal<string | null>(null);
 
   login(): void {
     this.submitting.set(true);
-    this.errorMessage.set(null);
-
     this.authService.login(this.credentials).subscribe({
-      next: (response) => {
-        console.log('Connexion réussie:', response);
-        
-        // Redirection selon le rôle
-        if (this.authService.isAdmin()) {
-          this.router.navigate(['/admin']);
-        } else {
-          this.router.navigate(['/account']);
-        }
-      },
-      error: (err: Error) => {
-        console.error('Erreur connexion:', err);
-        this.errorMessage.set(err.message);
-        this.submitting.set(false);
-      }
+      next: () => { this.router.navigate(['/account']); },
+      error: (err) => { this.errorMessage.set('Identifiants incorrects'); this.submitting.set(false); }
     });
   }
 }
