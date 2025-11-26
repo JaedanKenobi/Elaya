@@ -1,5 +1,5 @@
 # ÉTAPE 1: Installer les dépendances avec Composer
-FROM composer:2 AS vendor
+FROM composer:2 AS vendor 
 
 # Définir le répertoire de travail dans le conteneur
 WORKDIR /var/www/html
@@ -12,7 +12,7 @@ RUN composer install --no-dev --optimize-autoloader --prefer-dist
 
 # ÉTAPE 2: Construire l'image finale (Runtime)
 # Utiliser une image PHP-FPM (FastCGI Process Manager)
-FROM php:8.2-fpm
+FROM php:8.3-fpm
 
 # Installer les extensions PHP nécessaires pour Symfony (exemple : pdo pour la BDD, opcache pour la performance)
 RUN apt-get update && apt-get install -y \
