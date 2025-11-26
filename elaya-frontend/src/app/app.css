@@ -1,0 +1,6 @@
+@media (max-width: 768px) {
+    .reservation-container {
+        flex-direction: column;
+        padding: 10px;
+    }
+}

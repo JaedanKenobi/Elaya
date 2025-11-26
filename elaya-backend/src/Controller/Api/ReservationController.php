@@ -49,14 +49,14 @@ class ReservationController extends AbstractController
         return $this->json($data);
     }
 
-    // MODIFIÉ selon les instructions de l'autre IA
+    // créer et d'enregistrer une nouvelle entité de réservation client dans la base de données.
     #[Route('/', name: 'create', methods: ['POST'])]
     public function create(
         Request $request,
         EntityManagerInterface $em,
         #[CurrentUser] ?User $user = null
     ): JsonResponse {
-        // Décodage JSON sûr
+        
         $data = json_decode($request->getContent(), true) ?: [];
 
         $res = new Reservation();

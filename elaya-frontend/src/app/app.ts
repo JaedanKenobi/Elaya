@@ -19,12 +19,12 @@ import { Footer } from './components/footer/footer';
     </div>
   `,
   styles: [`
-    /* CORRECTION DU FOND VERT #1a2a1a */
+    /* Fond principal */
     .app-container {
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      background-color: var(--black-bg); /* Utilise la variable Noir */
+      background-color: var(--black-bg); /* Variable Noir */
     }
 
     .main-content {
@@ -32,7 +32,40 @@ import { Footer } from './components/footer/footer';
       display: flex;
       flex-direction: column;
     }
+    /* Mobile */
+    @media (max-width: 600px) {
+      .main-content {
+        padding: 12px;
+      }
+
+      .app-container {
+        padding-bottom: 10px;
+      }
+
+      app-header, app-footer {
+        width: 100%;
+      }
+      * {
+        max-width: 100%;
+        box-sizing: border-box;
+      }
+    }
+
+    /* Tablette */
+    @media (min-width: 600px) and (max-width: 1024px) {
+      .main-content {
+        padding: 16px;
+      }
+    }
+
+    /* Desktop large */
+    @media (min-width: 1024px) {
+      .main-content {
+        padding: 24px;
+      }
+    }
   `]
+  
 })
 export class App {
   title = 'elaya';
