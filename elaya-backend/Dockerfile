@@ -1,5 +1,6 @@
 # ÉTAPE 1: Installer les dépendances avec Composer
-FROM php:8.3-cli AS vendor
+# Utiliser l'image OFFICIELLE COMPOSER pour installer les dépendances (très rapide)
+FROM composer:2 AS vendor 
 
 # Définir le répertoire de travail dans le conteneur
 WORKDIR /var/www/html
@@ -12,12 +13,13 @@ RUN composer install --no-dev --optimize-autoloader --prefer-dist
 
 # ÉTAPE 2: Construire l'image finale (Runtime)
 # Utiliser une image PHP-FPM (FastCGI Process Manager)
-FROM php:8.3-fpm
+FROM php:8.3-fpm 
 
-# Installer les extensions PHP nécessaires pour Symfony (exemple : pdo pour la BDD, opcache pour la performance)
+# Installer les extensions PHP nécessaires pour Symfony
 RUN apt-get update && apt-get install -y \
     libpq-dev \
     libxml2-dev \
+    git \
     && docker-php-ext-install pdo_mysql opcache \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
