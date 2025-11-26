@@ -31,6 +31,9 @@ COPY --from=vendor /var/www/html/vendor /var/www/html/vendor
 # Copier le reste du code de l'application (source, config, etc.)
 COPY . /var/www/html
 
+# Créer les dossiers de cache et logs s'ils n'existent pas
+RUN mkdir -p /var/www/html/var/cache /var/www/html/var/log
+
 # Mettre à jour les permissions pour Symfony (cache, logs)
 RUN chown -R www-data:www-data /var/www/html/var
 
