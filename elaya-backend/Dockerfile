@@ -1,6 +1,6 @@
 # ÉTAPE 1: Installer les dépendances avec Composer
 # Utiliser l'image OFFICIELLE COMPOSER pour installer les dépendances (très rapide)
-FROM composer:2 AS vendor 
+FROM composer:2.7.4-php8.3-cli AS vendor
 
 # Définir le répertoire de travail dans le conteneur
 WORKDIR /var/www/html
