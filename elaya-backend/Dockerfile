@@ -9,7 +9,7 @@ WORKDIR /var/www/html
 COPY composer.json composer.lock ./
 
 # Installer les dépendances (sans les outils de développement)
-RUN composer install --no-dev --optimize-autoloader --prefer-dist
+RUN composer install --no-dev --optimize-autoloader --prefer-dist --ignore-platform-reqs
 
 # ÉTAPE 2: Construire l'image finale (Runtime)
 # Utiliser une image PHP-FPM (FastCGI Process Manager)
